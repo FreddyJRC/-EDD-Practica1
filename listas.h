@@ -14,12 +14,7 @@ struct Artista{
     Artista * anterior;
     Artista * siguiente;
 
-    void setArtista(char * n, ListaAlbums * a, Artista * an, Artista * s){
-        Nombre = n;
-        Albums = a;
-        anterior = an;
-        siguiente = s;
-    }
+    void setArtista(char * n, ListaAlbums * a, Artista * an, Artista * s);
 };
 
 struct Album{
@@ -28,12 +23,7 @@ struct Album{
     Album * anterior;
     Album * siguiente;
 
-    void setAlbum(char * n, ListaCanciones * c, Album * a, Album * s){
-        Nombre = n;
-        Canciones = c;
-        anterior = a;
-        siguiente = s;
-    }
+    void setAlbum(char * n, ListaCanciones * c, Album * a, Album * s);
 };
 
 struct Cancion{
@@ -42,54 +32,25 @@ struct Cancion{
     float rating;
     Cancion * siguiente;
 
-    void setCancion(char * n, char * p, float r, Cancion * s){
-        Nombre = n;
-        path = p;
-        rating = r;
-        siguiente = s;
-    }
+    void setCancion(char * n, char * p, float r, Cancion * s);
 };
 
 struct ListaArtistas{
     Artista * cabeza;
 
-    Artista * getLast(){
-        Artista * actual = cabeza;
-
-        do {
-            actual = actual->siguiente;
-        } while (actual != cabeza);
-
-        return actual;
-    }
+    Artista * getLast();
 };
 
 struct ListaAlbums{
     Album * cabeza;
 
-    Album * getLast(){
-        Album * actual = cabeza;
-
-        while (actual != NULL) {
-            actual = actual->siguiente;
-        }
-
-        return actual;
-    }
+    Album * getLast();
 };
 
 struct ListaCanciones{
     Cancion * cabeza;
 
-    Cancion * getLast(){
-        Cancion * actual = cabeza;
-
-        while (actual != NULL) {
-            actual = actual->siguiente;
-        }
-
-        return actual;
-    }
+    Cancion * getLast();
 };
 
 #endif // LISTAS_H
