@@ -1,0 +1,7 @@
+Artista1_Album1_Cancion1_/src/musica/cancion1.mp3_2.1;
+Artista1_Album1_Cancion2_/src/musica/cancion2.mp2_4.0;
+Artista1_Album2_Cancion3_/src/musica/cancion3.mp3_3.5;
+Artista2_Album3_cancion4_/src/musica/cancion4.mp3_1.2;
+Artista2_Album3_cancion5_/src/musica/cancion5.mp3_4.2;
+Artista2_Album3_cancion6_/src/musica/cancion6.mp3_2.6;
+Artista3_Album4_cancion7_/src/musica/cancion7.mp3_1.5;

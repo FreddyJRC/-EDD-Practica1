@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>719</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">border-bottom: solid 2px #c9c9c9;</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>80</y>
+      <width>51</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Play</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>80</y>
+      <width>81</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;&lt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>80</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&gt;&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>80</y>
+      <width>51</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Stop</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>321</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(238, 238, 236);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Titulo: --</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Autor: --</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>719</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuArchivo">
+    <property name="title">
+     <string>Archivo</string>
+    </property>
+    <addaction name="actionAbrir"/>
+    <addaction name="separator"/>
+    <addaction name="actionSalir"/>
+   </widget>
+   <addaction name="menuArchivo"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionAbrir">
+   <property name="text">
+    <string>Abrir</string>
+   </property>
+  </action>
+  <action name="actionSalir">
+   <property name="text">
+    <string>Salir</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
