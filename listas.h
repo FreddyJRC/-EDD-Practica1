@@ -1,6 +1,9 @@
 #ifndef LISTAS_H
 #define LISTAS_H
 
+#include <string>
+#include <vector>
+
 typedef struct ListaArtistas ListaArtistas;
 typedef struct ListaAlbums ListaAlbums;
 typedef struct ListaCanciones ListaCanciones;
@@ -9,48 +12,54 @@ typedef struct Album Album;
 typedef struct Cancion Cancion;
 
 struct Artista{
-    char * Nombre;
-    ListaAlbums * Albums;
-    Artista * anterior;
-    Artista * siguiente;
+    std::string Nombre;
+    ListaAlbums *Albums;
+    Artista *anterior;
+    Artista *siguiente;
 
-    void setArtista(char * n, ListaAlbums * a, Artista * an, Artista * s);
+    void setArtista(std::string n, ListaAlbums * a, Artista * an, Artista * s);
 };
 
 struct Album{
-    char * Nombre;
-    ListaCanciones * Canciones;
-    Album * anterior;
-    Album * siguiente;
+    std::string Nombre;
+    ListaCanciones *Canciones;
+    Album *anterior;
+    Album *siguiente;
 
-    void setAlbum(char * n, ListaCanciones * c, Album * a, Album * s);
+    void setAlbum(std::string n, ListaCanciones * c, Album * a, Album * s);
 };
 
 struct Cancion{
-    char * Nombre;
-    char * path;
+    std::string Nombre;
+    std::string path;
     float rating;
-    Cancion * siguiente;
+    Cancion *siguiente;
 
-    void setCancion(char * n, char * p, float r, Cancion * s);
+    void setCancion(std::string n, std::string p, float r, Cancion * s);
 };
 
 struct ListaArtistas{
-    Artista * cabeza;
+    Artista *cabeza;
 
+    void addArtista(Artista *nodo);
+    Artista * findArtista(std::string nombre);
     Artista * getLast();
 };
 
 struct ListaAlbums{
-    Album * cabeza;
+    Album *cabeza;
 
+    void addAlbum(Album * nodo);
     Album * getLast();
 };
 
 struct ListaCanciones{
-    Cancion * cabeza;
+    Cancion *cabeza;
 
+    void addCancion(Cancion * nodo);
     Cancion * getLast();
 };
 
+void fillListas();
+std::vector<std::string> explode(std::string& str, const char& ch);
 #endif // LISTAS_H
