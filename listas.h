@@ -32,10 +32,10 @@ struct Album{
 struct Cancion{
     char *Nombre;
     char *path;
-    float rating;
+    double rating;
     Cancion *siguiente;
 
-    void setCancion(std::string n, std::string p, float r, Cancion * s);
+    void setCancion(std::string n, std::string p, double r, Cancion * s);
 };
 
 struct ListaArtistas{

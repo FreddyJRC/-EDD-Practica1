@@ -12,7 +12,7 @@ void fillListas(){
     std::vector<std::string> segmentos;
     std::string line;
 
-    ListaArtistas * artistas = (ListaArtistas*) malloc(sizeof(ListaArtistas));
+    ListaArtistas *artistas = (ListaArtistas*) malloc(sizeof(ListaArtistas));
     artistas->cabeza = NULL;
     artistas->final = NULL;
 
@@ -30,6 +30,18 @@ void fillListas(){
         }
 
         Album *AlbumActual = ArtistaActual->Albums->findAlbum(segmentos[1]);
+
+        if(AlbumActual->Canciones == NULL){
+            ListaCanciones *canciones = (ListaCanciones*) malloc(sizeof(ListaCanciones));
+            canciones->cabeza = NULL;
+            canciones->final = NULL;
+            AlbumActual->Canciones = canciones;
+        }
+
+        Cancion *CancionActual = (Cancion*) malloc(sizeof(Cancion));
+        CancionActual->setCancion(segmentos[2], segmentos[3], std::stof(segmentos[4].c_str()), NULL);
+        AlbumActual->Canciones->addCancion(CancionActual);
+
     }
 
 }
@@ -55,12 +67,12 @@ void Album::setAlbum(std::string n, ListaCanciones * c, Album * a, Album * s){
     siguiente = s;
 }
 
-void Cancion::setCancion(std::string n, std::string p, float r, Cancion * s){
+void Cancion::setCancion(std::string n, std::string p, double r, Cancion * s){
     char *cstr = new char[n.length() + 1];
     std::strcpy(cstr, n.c_str());
 
     char *cstr2 = new char[p.length() + 1];
-    std::strcpy(cstr2, n.c_str());
+    std::strcpy(cstr2, p.c_str());
 
     Nombre = cstr;
     path = cstr2;
@@ -193,7 +205,7 @@ Cancion * ListaCanciones::findCancion(std::string nombre){
 
     if(actual == NULL){
         Cancion *nuevo = (Cancion*) malloc(sizeof(Cancion));
-        nuevo->setCancion(nombre, NULL, NULL, NULL);
+        nuevo->setCancion(nombre, NULL, 0, NULL);
         addCancion(nuevo);
         return nuevo;
     } else {
@@ -208,7 +220,7 @@ Cancion * ListaCanciones::findCancion(std::string nombre){
 
         if(!found){
             Cancion *nuevo = (Cancion*) malloc(sizeof(Cancion));
-            nuevo->setCancion(nombre, NULL, NULL, NULL);
+            nuevo->setCancion(nombre, NULL, 0, NULL);
             this->addCancion(nuevo);
             return nuevo;
         }
