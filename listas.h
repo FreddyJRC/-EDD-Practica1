@@ -12,7 +12,7 @@ typedef struct Album Album;
 typedef struct Cancion Cancion;
 
 struct Artista{
-    std::string Nombre;
+    char *Nombre;
     ListaAlbums *Albums;
     Artista *anterior;
     Artista *siguiente;
@@ -21,7 +21,7 @@ struct Artista{
 };
 
 struct Album{
-    std::string Nombre;
+    char *Nombre;
     ListaCanciones *Canciones;
     Album *anterior;
     Album *siguiente;
@@ -30,8 +30,8 @@ struct Album{
 };
 
 struct Cancion{
-    std::string Nombre;
-    std::string path;
+    char *Nombre;
+    char *path;
     float rating;
     Cancion *siguiente;
 
@@ -40,26 +40,29 @@ struct Cancion{
 
 struct ListaArtistas{
     Artista *cabeza;
+    Artista *final;
 
     void addArtista(Artista *nodo);
     Artista * findArtista(std::string nombre);
-    Artista * getLast();
 };
 
 struct ListaAlbums{
     Album *cabeza;
+    Album *final;
 
     void addAlbum(Album * nodo);
-    Album * getLast();
+    Album * findAlbum(std::string nombre);
 };
 
 struct ListaCanciones{
     Cancion *cabeza;
+    Cancion *final;
 
     void addCancion(Cancion * nodo);
-    Cancion * getLast();
+    Cancion * findCancion(std::string nombre);
 };
 
 void fillListas();
 std::vector<std::string> explode(std::string& str, const char& ch);
+
 #endif // LISTAS_H

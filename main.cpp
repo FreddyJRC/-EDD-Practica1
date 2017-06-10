@@ -6,11 +6,11 @@
 
 int main(int argc, char *argv[])
 {
-    fillListas();
-
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
+
+    fillListas();
 
     return a.exec();
 }
