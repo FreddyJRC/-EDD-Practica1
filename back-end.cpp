@@ -6,7 +6,7 @@
 #include <vector>
 #include <listas.h>
 
-void fillListas(){
+ListaArtistas * fillListas(){
 
     std::ifstream file("../res/ListaReproduccion.txt");
     std::vector<std::string> segmentos;
@@ -44,6 +44,67 @@ void fillListas(){
 
     }
 
+    return artistas;
+}
+
+void ListaArtistas::dibujar(){
+    FILE *fs = NULL;
+    fs = fopen("biblioteca.dot", "w+");
+
+    int i = 0, j = 0;
+    Artista *actual = this->cabeza;
+
+    fprintf(fs, "digraph G {\n {rank=same;");
+    do{
+        fprintf(fs, "%s; ", actual->Nombre);
+        actual = actual->siguiente;
+    }while(actual != this->cabeza);
+    fprintf(fs, "}\n");
+    actual = this->cabeza;
+
+    do{
+        fprintf(fs, "%s %s %s %s", actual->Nombre, "->", actual->siguiente->Nombre, "[dir=both];\n");
+
+        Album *AlbumActual = actual->Albums->cabeza;
+        fprintf(fs, "%s -> %s;\n", actual->Nombre, AlbumActual->Nombre);
+        fprintf(fs, "subgraph cluster%d {\n rank=same;\n", i);
+
+        while (AlbumActual != NULL) {
+            if(AlbumActual->siguiente == NULL){
+                fprintf(fs, "%s;\n", AlbumActual->Nombre);
+            } else {
+                fprintf(fs, "%s -> %s [dir=both];\n", AlbumActual->Nombre, AlbumActual->siguiente->Nombre);
+            }
+
+            Cancion *CancionActual = AlbumActual->Canciones->cabeza;
+            fprintf(fs, "%s -> %s;\n", AlbumActual->Nombre, CancionActual->Nombre);
+            fprintf(fs, "subgraph cluster%d_%d {\n rank=same;\n", i, j);
+
+            while (CancionActual != NULL) {
+                if(CancionActual->siguiente == NULL){
+                    fprintf(fs, "%s;\n", CancionActual->Nombre);
+                } else {
+                    fprintf(fs, "%s -> %s;\n", CancionActual->Nombre, CancionActual->siguiente->Nombre);
+                }
+                CancionActual = CancionActual->siguiente;
+            }
+
+            fprintf(fs, "}\n");
+            ++j;
+
+            AlbumActual = AlbumActual->siguiente;
+        }
+
+        fprintf(fs, "}\n");
+        j = 0;
+        ++i;
+
+        actual = actual->siguiente;
+    }while (actual != this->cabeza);
+    fprintf(fs, "}");
+    fclose(fs);
+
+    system("dot -Tpng biblioteca.dot -o biblioteca.png");
 }
 
 //Constructores para los Nodos.
@@ -91,8 +152,6 @@ void ListaArtistas::addArtista(Artista *nodo){
         nodo->anterior = nodo;
 
     } else {
-
-        //Artista *last = this->getLast();
 
         nodo->siguiente = this->final->siguiente;
         nodo->anterior = this->final;

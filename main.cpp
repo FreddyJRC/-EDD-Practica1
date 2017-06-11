@@ -10,7 +10,8 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    fillListas();
+    ListaArtistas *artistas = fillListas();
+    artistas->dibujar();
 
     return a.exec();
 }

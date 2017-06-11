@@ -43,6 +43,7 @@ struct ListaArtistas{
     Artista *final;
 
     void addArtista(Artista *nodo);
+    void dibujar();
     Artista * findArtista(std::string nombre);
 };
 
@@ -62,7 +63,7 @@ struct ListaCanciones{
     Cancion * findCancion(std::string nombre);
 };
 
-void fillListas();
+ListaArtistas * fillListas();
 std::vector<std::string> explode(std::string& str, const char& ch);
 
 #endif // LISTAS_H
