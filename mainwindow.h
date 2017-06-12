@@ -14,6 +14,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    crearCircular();
+
+private slots:
+    void on_pushButton_5_clicked();
 
 private:
     Ui::MainWindow *ui;

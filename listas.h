@@ -7,9 +7,11 @@
 typedef struct ListaArtistas ListaArtistas;
 typedef struct ListaAlbums ListaAlbums;
 typedef struct ListaCanciones ListaCanciones;
+typedef struct ListaReproduccion ListaReproduccion;
 typedef struct Artista Artista;
 typedef struct Album Album;
 typedef struct Cancion Cancion;
+typedef struct Reproduccion Reproduccion;
 
 struct Artista{
     char *Nombre;
@@ -38,6 +40,13 @@ struct Cancion{
     void setCancion(std::string n, std::string p, double r, Cancion * s);
 };
 
+struct Reproduccion{
+    Cancion *nodo;
+
+    Reproduccion *siguiente;
+    Reproduccion *anterior;
+};
+
 struct ListaArtistas{
     Artista *cabeza;
     Artista *final;
@@ -63,7 +72,15 @@ struct ListaCanciones{
     Cancion * findCancion(std::string nombre);
 };
 
+struct ListaReproduccion{
+    Reproduccion *cabeza;
+    Reproduccion *fin;
+
+    void addCancion(Cancion* actual);
+};
+
 ListaArtistas * fillListas();
 std::vector<std::string> explode(std::string& str, const char& ch);
+ListaReproduccion * CrearCircular();
 
 #endif // LISTAS_H
