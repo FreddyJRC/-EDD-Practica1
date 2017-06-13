@@ -6,13 +6,15 @@
 #include <vector>
 #include <listas.h>
 
+ListaArtistas *artistas;
+
 ListaArtistas * fillListas(){
 
     std::ifstream file("../res/ListaReproduccion.txt");
     std::vector<std::string> segmentos;
     std::string line;
 
-    ListaArtistas *artistas = (ListaArtistas*) malloc(sizeof(ListaArtistas));
+    artistas = (ListaArtistas*) malloc(sizeof(ListaArtistas));
     artistas->cabeza = NULL;
     artistas->final = NULL;
 
@@ -151,18 +153,31 @@ void ListaCanciones::addCancion(Cancion *nodo){
     }
 }
 
-void ListaReproduccion::addCancion(std::string linea){
-    std::vector<std::string> segmentos = explode(line, '_');
+void ListaReproduccion::addCancion(std::string linea, ListaArtistas *biblioteca){
+    std::vector<std::string> segmentos = explode(linea, '_');
 
     if(this->tipo == 0){
-        if(this->cabeza == NULL){
+        Artista *art = biblioteca->findArtista(segmentos[0]);
+        Album *alb = art->Albums->findAlbum(segmentos[1]);
+        Cancion *sng = alb->Canciones->findCancion(segmentos[2]);
+        Reproduccion *nuevo = (Reproduccion*) malloc(sizeof(Reproduccion));
 
+        if(this->cabeza ==  NULL){
+            nuevo->setReproduccion(sng, nuevo, nuevo);
+            this->cabeza = this->fin = nuevo;
+        } else {
+            nuevo->setReproduccion(sng, cabeza, fin);
+            fin->siguiente = nuevo;
+            cabeza->anterior = nuevo;
+            fin = nuevo;
         }
     } else if (this->tipo == 1) {
 
     } else if (this->tipo == 2){
 
     }
+
+    this->dibujar();
 }
 
 //busqueda de elementos
@@ -259,6 +274,10 @@ Cancion * ListaCanciones::findCancion(std::string nombre){
 
 //Metodos auxiliares
 
+ListaArtistas * getBiblioteca(){
+    return artistas;
+}
+
 std::vector<std::string> explode(std::string& str, const char& ch) {
     std::string next;
     std::vector<std::string> result;
@@ -341,4 +360,24 @@ void ListaArtistas::dibujar(){
     fclose(fs);
 
     system("dot -Tpng biblioteca.dot -o biblioteca.png");
+}
+
+void ListaReproduccion::dibujar(){
+    FILE *fs = NULL;
+    fs = fopen("reproduccion.dot", "w+");
+
+    Reproduccion *actual = this->cabeza;
+
+    fprintf(fs, "digraph G {\n rank=same;\n");
+    fprintf(fs, "%s", actual->nodo->Nombre);
+    actual = actual->siguiente;
+    while(actual != this->cabeza){
+        fprintf(fs, " -> %s", actual->nodo->Nombre);
+        actual = actual->siguiente;
+    }
+    if(this->tipo == 0) fprintf(fs, " [dir=both]");
+    fprintf(fs, ";\n }");
+    fclose(fs);
+
+    system("dot -Tpng reproduccion.dot -o reproduccion.png");
 }

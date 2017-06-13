@@ -45,6 +45,8 @@ struct Reproduccion{
 
     Reproduccion *siguiente;
     Reproduccion *anterior;
+
+    void setReproduccion(Cancion *nodo, Reproduccion *s, Reproduccion *a);
 };
 
 struct ListaArtistas{
@@ -77,11 +79,13 @@ struct ListaReproduccion{
     Reproduccion *cabeza;
     Reproduccion *fin;
 
-    void addCancion(std::string linea);
+    void addCancion(std::string linea, ListaArtistas *biblioteca);
+    void dibujar();
 };
 
 ListaArtistas * fillListas();
 std::vector<std::string> explode(std::string& str, const char& ch);
+ListaArtistas * getBiblioteca();
 ListaReproduccion * CrearCircular();
 
 #endif // LISTAS_H
