@@ -196,6 +196,9 @@
      <bool>false</bool>
     </property>
     <widget class="QLineEdit" name="lineEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -206,6 +209,9 @@
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_8">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>120</x>

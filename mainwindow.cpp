@@ -2,6 +2,9 @@
 #include "ui_mainwindow.h"
 #include <listas.h>
 
+ListaArtistas *biblioteca;
+ListaReproduccion *lista;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -16,5 +19,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_5_clicked()
 {
-    ListaReproduccion *lista = crearCircular();
+    ui->lineEdit->setEnabled(true);
+    ui->pushButton_8->setEnabled(true);
+
+    lista = crearCircular();
+}
+
+void MainWindow::on_pushButton_8_clicked()
+{
+    QString song = ui->lineEdit->text();
+    biblioteca;
+    if(song.length() > 0){
+        lista->addCancion(song.toStdString());
+    }
 }

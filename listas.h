@@ -73,10 +73,11 @@ struct ListaCanciones{
 };
 
 struct ListaReproduccion{
+    int tipo;
     Reproduccion *cabeza;
     Reproduccion *fin;
 
-    void addCancion(Cancion* actual);
+    void addCancion(std::string linea);
 };
 
 ListaArtistas * fillListas();

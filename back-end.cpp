@@ -47,64 +47,13 @@ ListaArtistas * fillListas(){
     return artistas;
 }
 
-void ListaArtistas::dibujar(){
-    FILE *fs = NULL;
-    fs = fopen("biblioteca.dot", "w+");
+ListaReproduccion * CrearCircular(){
+    ListaReproduccion *circular = (ListaReproduccion*) malloc(sizeof(ListaReproduccion));
+    circular->tipo = 0;
+    circular->cabeza = NULL;
+    circular->fin = NULL;
 
-    int i = 0, j = 0;
-    Artista *actual = this->cabeza;
-
-    fprintf(fs, "digraph G {\n {rank=same;");
-    do{
-        fprintf(fs, "%s; ", actual->Nombre);
-        actual = actual->siguiente;
-    }while(actual != this->cabeza);
-    fprintf(fs, "}\n");
-    actual = this->cabeza;
-
-    do{
-        fprintf(fs, "%s %s %s %s", actual->Nombre, "->", actual->siguiente->Nombre, "[dir=both];\n");
-
-        Album *AlbumActual = actual->Albums->cabeza;
-        fprintf(fs, "%s -> %s;\n", actual->Nombre, AlbumActual->Nombre);
-        fprintf(fs, "subgraph cluster%d {\n rank=same;\n", i);
-
-        while (AlbumActual != NULL) {
-            if(AlbumActual->siguiente == NULL){
-                fprintf(fs, "%s;\n", AlbumActual->Nombre);
-            } else {
-                fprintf(fs, "%s -> %s [dir=both];\n", AlbumActual->Nombre, AlbumActual->siguiente->Nombre);
-            }
-
-            Cancion *CancionActual = AlbumActual->Canciones->cabeza;
-            fprintf(fs, "%s -> %s;\n", AlbumActual->Nombre, CancionActual->Nombre);
-            fprintf(fs, "subgraph cluster%d_%d {\n rank=same;\n", i, j);
-
-            while (CancionActual != NULL) {
-                if(CancionActual->siguiente == NULL){
-                    fprintf(fs, "%s;\n", CancionActual->Nombre);
-                } else {
-                    fprintf(fs, "%s -> %s;\n", CancionActual->Nombre, CancionActual->siguiente->Nombre);
-                }
-                CancionActual = CancionActual->siguiente;
-            }
-
-            fprintf(fs, "}\n");
-            ++j;
-
-            AlbumActual = AlbumActual->siguiente;
-        }
-
-        fprintf(fs, "}\n");
-        j = 0;
-        ++i;
-
-        actual = actual->siguiente;
-    }while (actual != this->cabeza);
-    fprintf(fs, "}");
-    fclose(fs);
-
-    system("dot -Tpng biblioteca.dot -o biblioteca.png");
+    return circular;
 }
 
 //Constructores para los Nodos.
@@ -139,6 +88,12 @@ void Cancion::setCancion(std::string n, std::string p, double r, Cancion * s){
     path = cstr2;
     rating = r;
     siguiente = s;
+}
+
+void Reproduccion::setReproduccion(Cancion *nodo, Reproduccion *s, Reproduccion *a){
+    this->nodo = nodo;
+    this->siguiente = s;
+    this->anterior = a;
 }
 
 //Metodos para agregar nodos a las listas.
@@ -192,6 +147,20 @@ void ListaCanciones::addCancion(Cancion *nodo){
         final->siguiente = nodo;
         nodo->siguiente = NULL;
         this->final = nodo;
+
+    }
+}
+
+void ListaReproduccion::addCancion(std::string linea){
+    std::vector<std::string> segmentos = explode(line, '_');
+
+    if(this->tipo == 0){
+        if(this->cabeza == NULL){
+
+        }
+    } else if (this->tipo == 1) {
+
+    } else if (this->tipo == 2){
 
     }
 }
@@ -312,4 +281,64 @@ std::vector<std::string> explode(std::string& str, const char& ch) {
     if (!next.empty())
          result.push_back(next);
     return result;
+}
+
+void ListaArtistas::dibujar(){
+    FILE *fs = NULL;
+    fs = fopen("biblioteca.dot", "w+");
+
+    int i = 0, j = 0;
+    Artista *actual = this->cabeza;
+
+    fprintf(fs, "digraph G {\n {rank=same;");
+    do{
+        fprintf(fs, "%s; ", actual->Nombre);
+        actual = actual->siguiente;
+    }while(actual != this->cabeza);
+    fprintf(fs, "}\n");
+    actual = this->cabeza;
+
+    do{
+        fprintf(fs, "%s %s %s %s", actual->Nombre, "->", actual->siguiente->Nombre, "[dir=both];\n");
+
+        Album *AlbumActual = actual->Albums->cabeza;
+        fprintf(fs, "%s -> %s;\n", actual->Nombre, AlbumActual->Nombre);
+        fprintf(fs, "subgraph cluster%d {\n rank=same;\n", i);
+
+        while (AlbumActual != NULL) {
+            if(AlbumActual->siguiente == NULL){
+                fprintf(fs, "%s;\n", AlbumActual->Nombre);
+            } else {
+                fprintf(fs, "%s -> %s [dir=both];\n", AlbumActual->Nombre, AlbumActual->siguiente->Nombre);
+            }
+
+            Cancion *CancionActual = AlbumActual->Canciones->cabeza;
+            fprintf(fs, "%s -> %s;\n", AlbumActual->Nombre, CancionActual->Nombre);
+            fprintf(fs, "subgraph cluster%d_%d {\n rank=same;\n", i, j);
+
+            while (CancionActual != NULL) {
+                if(CancionActual->siguiente == NULL){
+                    fprintf(fs, "%s;\n", CancionActual->Nombre);
+                } else {
+                    fprintf(fs, "%s -> %s;\n", CancionActual->Nombre, CancionActual->siguiente->Nombre);
+                }
+                CancionActual = CancionActual->siguiente;
+            }
+
+            fprintf(fs, "}\n");
+            ++j;
+
+            AlbumActual = AlbumActual->siguiente;
+        }
+
+        fprintf(fs, "}\n");
+        j = 0;
+        ++i;
+
+        actual = actual->siguiente;
+    }while (actual != this->cabeza);
+    fprintf(fs, "}");
+    fclose(fs);
+
+    system("dot -Tpng biblioteca.dot -o biblioteca.png");
 }
