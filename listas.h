@@ -81,11 +81,14 @@ struct ListaReproduccion{
 
     void addCancion(std::string linea, ListaArtistas *biblioteca);
     void dibujar();
+    Reproduccion * pop();
 };
 
 ListaArtistas * fillListas();
 std::vector<std::string> explode(std::string& str, const char& ch);
 ListaArtistas * getBiblioteca();
 ListaReproduccion * CrearCircular();
+ListaReproduccion * CrearPila();
+ListaReproduccion * CrearCola();
 
 #endif // LISTAS_H
