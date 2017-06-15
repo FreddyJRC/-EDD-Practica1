@@ -42,6 +42,8 @@ struct Cancion{
 
 struct Reproduccion{
     Cancion *nodo;
+    Album *alb;
+    Artista *art;
 
     Reproduccion *siguiente;
     Reproduccion *anterior;

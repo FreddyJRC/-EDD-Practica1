@@ -313,8 +313,11 @@ Reproduccion * ListaReproduccion::pop(){
     Reproduccion *tmp;
 
     tmp = this->cabeza;
-    if(tmp != NULL) cabeza = cabeza->siguiente;
-    this->dibujar();
+    if(tmp != NULL){
+        cabeza = cabeza->siguiente;
+        tmp->siguiente = NULL;
+        this->dibujar();
+    }
 
     return tmp;
 }

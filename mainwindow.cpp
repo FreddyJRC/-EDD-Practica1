@@ -2,21 +2,23 @@
 #include "ui_mainwindow.h"
 #include <listas.h>
 #include <string.h>
+#include <vector>
 
 ListaArtistas *biblioteca;
 ListaReproduccion *lista;
 Reproduccion *playing;
-qint64 duracion;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     player = new QMediaPlayer(this);
     duracion = 0;
     connect(player, &QMediaPlayer::durationChanged, this, &MainWindow::on_durationChanged);
     connect(player, &QMediaPlayer::positionChanged, this, &MainWindow::on_positionChanged);
+    connect(ui->actionBiblioteca, &QAction::triggered, this, &MainWindow::on_MostrarBiblioteca);
 }
 
 MainWindow::~MainWindow()
@@ -32,6 +34,7 @@ void MainWindow::on_pushButton_5_clicked()
     ui->pushButton_3->setEnabled(true);
 
     lista = CrearCircular();
+    //lista->tipo = 0;
 }
 
 void MainWindow::on_pushButton_6_clicked()
@@ -41,6 +44,7 @@ void MainWindow::on_pushButton_6_clicked()
     ui->pushButton_2->setEnabled(false);
 
     lista = CrearPila();
+    //lista->tipo = 1;
 }
 
 void MainWindow::on_pushButton_7_clicked()
@@ -50,6 +54,7 @@ void MainWindow::on_pushButton_7_clicked()
     ui->pushButton_2->setEnabled(false);
 
     lista = CrearCola();
+    //lista->tipo = 2;
 }
 
 void MainWindow::on_pushButton_8_clicked()
@@ -96,7 +101,7 @@ void MainWindow::on_positionChanged(qint64 posicion)
 void MainWindow::on_pushButton_3_clicked()
 {
     player->stop();
-    if(lista->tipo == 1){
+    if(lista->tipo == 0){
         playing = playing->siguiente;
     } else {
         playing = lista->pop();
@@ -106,6 +111,8 @@ void MainWindow::on_pushButton_3_clicked()
         player->setMedia(QUrl::fromLocalFile(QString::fromStdString(playing->nodo->path)));
         ui->progressBar->setFormat(QString::fromStdString(playing->nodo->Nombre));
         player->play();
+    } else {
+        ui->progressBar->setFormat("LISTA FINALIZADA");
     }
 }
 
@@ -116,4 +123,53 @@ void MainWindow::on_pushButton_2_clicked()
     player->setMedia(QUrl::fromLocalFile(QString::fromStdString(playing->nodo->path)));
     ui->progressBar->setFormat(QString::fromStdString(playing->nodo->Nombre));
     player->play();
+}
+
+// REPORTES
+
+void MainWindow::on_MostrarBiblioteca()
+{
+    system("xdg-open biblioteca.png");
+}
+
+void MainWindow::on_MostrarTopCanciones()
+{
+    ListaReproduccion *topCanciones = new ListaReproduccion;
+    topCanciones->tipo = 1;
+    topCanciones->cabeza = NULL;
+    topCanciones->fin = NULL;
+
+    Artista *art = biblioteca->cabeza;
+
+    do{
+        Album *alb = art->Albums;
+
+        while (alb != NULL) {
+            Cancion *sng = alb->Canciones;
+
+            while (sng != NULL) {
+                if(topCanciones->cabeza == NULL){
+                    Reproduccion *nuevo = new Reproduccion;
+                    nuevo->nodo = sng;
+                    nuevo->siguiente = NULL;
+
+                    topCanciones->cabeza = nuevo;
+                } else {
+                    Reproduccion *actua = topCanciones->cabeza;
+
+                    while (actua != NULL) {
+                        if(sng->rating > actua->siguiente->nodo->rating){
+
+                        }
+                    }
+                }
+
+                sng = sng->siguiente;
+            }
+
+            alb = alb->siguiente;
+        }
+
+        art = art->siguiente;
+    }while(art != biblioteca->cabeza);
 }

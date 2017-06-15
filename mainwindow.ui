@@ -232,7 +232,17 @@ color: rgb(0, 0, 0);</string>
     <property name="title">
      <string>Archivo</string>
     </property>
+    <widget class="QMenu" name="menuReportes">
+     <property name="title">
+      <string>Reportes</string>
+     </property>
+     <addaction name="actionTop_Artistas"/>
+     <addaction name="actionTop_Albums"/>
+     <addaction name="actionTop_Canciones"/>
+     <addaction name="actionBiblioteca"/>
+    </widget>
     <addaction name="separator"/>
+    <addaction name="menuReportes"/>
     <addaction name="actionSalir"/>
    </widget>
    <addaction name="menuArchivo"/>
@@ -241,6 +251,26 @@ color: rgb(0, 0, 0);</string>
   <action name="actionSalir">
    <property name="text">
     <string>Salir</string>
+   </property>
+  </action>
+  <action name="actionTop_Artistas">
+   <property name="text">
+    <string>Top Artistas</string>
+   </property>
+  </action>
+  <action name="actionTop_Albums">
+   <property name="text">
+    <string>Top Albums</string>
+   </property>
+  </action>
+  <action name="actionTop_Canciones">
+   <property name="text">
+    <string>Top Canciones</string>
+   </property>
+  </action>
+  <action name="actionBiblioteca">
+   <property name="text">
+    <string>Biblioteca</string>
    </property>
   </action>
  </widget>
